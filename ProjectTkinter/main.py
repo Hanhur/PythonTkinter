@@ -17,6 +17,7 @@ greet_label.pack()
 
 def change_text():
     greet_label["text"] = input_1.get()
+    greet_label["text"] = text_field.get("1.0", END)
     input_1.delete(0, END)
 
 button_1 = Button(text="Click", command = change_text)
@@ -28,6 +29,9 @@ input_1.focus()
 input_1.pack()
 
 
+text_field = Text(width=40, height=10)
+text_field.focus()
+text_field.pack()
 
 
 
