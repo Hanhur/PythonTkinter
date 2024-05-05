@@ -21,3 +21,21 @@ def create():
 
     connection.commit()
     connection.close()
+
+def insert_data():
+    connection = psycopg2.connect(
+        dbname = 'student',
+        user = 'name',
+        password = 'pass',
+        host = '127.0.0.1',
+        port = '5432'
+    )
+
+    cursor = connection.cursor()
+    cursor.execute('''
+        INSERT INTO teacher(name, age, address) 
+        VALUES ('McGonagallove', 50, 'Bradavice')  
+    ''')
+
+    connection.commit()
+    connection.close()
