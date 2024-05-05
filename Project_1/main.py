@@ -31,11 +31,14 @@ def insert_data():
         port = '5432'
     )
 
-    cursor = connection.cursor()
-    cursor.execute('''
-        INSERT INTO teacher(name, age, address) 
-        VALUES ('McGonagallove', 50, 'Bradavice')  
-    ''')
+    teacher_name = input('Jmeno ucitele: ')
+    teacher_age = input('Vek ucitele: ')
+    teacher_address = input('Adresa ucitele: ')
 
+    cursor = connection.cursor()
+    query = '''INSERT INTO teacher(name, age, address) VALUES (%s, %s, %s)'''
+    cursor.execute(query, (teacher_name, teacher_age, teacher_address))
     connection.commit()
     connection.close()
+
+insert_data()
