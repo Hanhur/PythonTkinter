@@ -6,7 +6,7 @@ root.title('Skola a databaze')
 root.geometry('350x280')
 root.resizable(False, False)
 
-# Functions
+# Functions ==================================================================
 def insert_data(name, age, address):
     connection = psycopg2.connect(
         dbname = 'student',
@@ -19,8 +19,33 @@ def insert_data(name, age, address):
     cursor = connection.cursor()
     query = '''INSERT INTO teacher(name, age, address) VALUES (%s, %s, %s)'''
     cursor.execute(query, (name, age, address))
+
     connection.commit()
     connection.close()
+
+def search(id):
+    connection = psycopg2.connect(
+        dbname = 'student',
+        user = 'name',
+        password = 'pass',
+        host = '127.0.0.1',
+        port = '5432'
+    )
+
+    cursor = connection.cursor()
+    query = '''SELECT * FROM teacher WHERE id = %s'''
+    cursor.execute(query, (id))
+    row = cursor.fetchone()
+    display_search(row)
+
+    connection.commit()
+    connection.close()
+
+def display_search(data):
+    listbox = Listbox(root, width = 20, height = 1)
+    listbox.grid(row = 8, column = 1)
+    listbox.insert(0, data)
+
 
 label_general = Label(root, text = 'Add data')
 label_general.grid(row = 0, column = 1)
@@ -62,7 +87,7 @@ entry_id = Entry(root)
 entry_id.grid(row = 6, column = 1)
 
 # Button Search ==========================================
-button_search = Button(root, text = 'Search')
+button_search = Button(root, text = 'Search', command = lambda:search(entry_id.get()))
 button_search.grid(row = 6, column = 2)
 
 # Cyclus =================================================
