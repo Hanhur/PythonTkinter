@@ -8,6 +8,10 @@ root.resizable(False, False)
 
 # Functions ==================================================================
 def insert_data(name, age, address):
+    entry_name.delete(0, END)
+    entry_age.delete(0, END)
+    entry_address.delete(0, END)
+
     connection = psycopg2.connect(
         dbname = 'student',
         user = 'name',
@@ -107,7 +111,7 @@ entry_id = Entry(root)
 entry_id.grid(row = 6, column = 1)
 
 # Button Search ==========================================
-button_search = Button(root, text = 'Search', command = lambda:search(entry_id.get()))
+button_search = Button(root, text = 'Search', command = lambda:search(entry_id.get()) if entry_id.get().strip() else None)
 button_search.grid(row = 6, column = 2)
 
 # Cyclus =================================================
