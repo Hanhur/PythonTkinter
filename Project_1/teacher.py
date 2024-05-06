@@ -3,7 +3,7 @@ import psycopg2
 
 root = Tk()
 root.title('Skola a databaze')
-root.geometry('300x280')
+root.geometry('350x280')
 root.resizable(False, False)
 
 # Functions
@@ -49,6 +49,21 @@ entry_address.grid(row = 3, column = 1)
 # Button =================================================
 button = Button(root, text = 'Add', command = lambda:insert_data(entry_name.get(), entry_age.get(), entry_address.get()))
 button.grid(row = 4, column = 1)
+
+# Serch Section ==========================================
+label_rearch = Label(root, text = 'Search data')
+label_rearch.grid(row = 5, column = 1)
+
+# ID section =============================================
+label_id = Label(root, text = 'search by ID: ')
+label_id.grid(row = 6, column = 0)
+
+entry_id = Entry(root)
+entry_id.grid(row = 6, column = 1)
+
+# Button Search ==========================================
+button_search = Button(root, text = 'Search')
+button_search.grid(row = 6, column = 2)
 
 # Cyclus =================================================
 root.mainloop()
