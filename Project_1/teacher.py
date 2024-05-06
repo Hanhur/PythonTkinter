@@ -39,9 +39,12 @@ def search(id):
 
     cursor = connection.cursor()
     query = '''SELECT * FROM teacher WHERE id = %s'''
-    cursor.execute(query, (id))
+    cursor.execute(query, (id,))
     row = cursor.fetchone()
-    display_search(row)
+    if row:
+        display_search(row)
+    else:
+        display_search('ID nenalezeno')
 
     connection.commit()
     connection.close()
