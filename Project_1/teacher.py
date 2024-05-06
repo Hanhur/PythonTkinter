@@ -22,6 +22,7 @@ def insert_data(name, age, address):
 
     connection.commit()
     connection.close()
+    display_all()
 
 def search(id):
     connection = psycopg2.connect(
@@ -46,6 +47,25 @@ def display_search(data):
     listbox.grid(row = 8, column = 1)
     listbox.insert(0, data)
 
+def display_all():
+    connection = psycopg2.connect(
+        dbname = 'student',
+        user = 'name',
+        password = 'pass',
+        host = '127.0.0.1',
+        port = '5432'
+    )
+
+    cursor = connection.cursor()
+    query = '''SELECT * FROM teacher'''
+    cursor.execute(query)
+    all_data = cursor.fetchall()
+    listbox = Listbox(root, width = 25, height = 5)
+    listbox.grid(row = 9, column = 1)
+    for one_row in all_data:
+        listbox.insert(0, one_row)
+
+display_all()
 
 label_general = Label(root, text = 'Add data')
 label_general.grid(row = 0, column = 1)
