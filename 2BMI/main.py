@@ -24,6 +24,39 @@ def calculate_bmi(weight, height):
     label_user_result_1['text'] = bmi
     label_user_result_2['text'] = text_result
 
+    insert_data(bmi, text_result)
+
+def insert_data(bmi_name, bmi_text):
+    connection = psycopg2.connect(
+        dbname = 'health',
+        user = 'name',
+        password = 'pass',
+        host = '127.0.0.1',
+        port = '5432'
+    )
+
+    cursor = connection.cursor()
+    query = '''INSERT INTO bmi(bmi_number, bmi_text) VALUES (%s, %s)'''
+    cursor.execute(query, (bmi_name, bmi_text))
+    connection.commit()
+    connection.close()
+
+def count_all_data():
+    connection = psycopg2.connect(
+        dbname = 'health',
+        user = 'name',
+        password = 'pass',
+        host = '127.0.0.1',
+        port = '5432'
+    )
+
+    cursor = connection.cursor()
+    query = '''SELECT COUNT(bmi_id) FROM bmi'''
+    cursor.execute(query)
+    count = cursor.fetchone()
+    connection.close()
+    return count[0]
+
 # general label ================================================================
 label_general = Label(root, text = 'Vypocet BMi')
 label_general.grid(row = 0, column = 1)
@@ -62,7 +95,7 @@ label_user_result_2.grid(row = 5, column = 1)
 label_count_text = Label(root, text = 'Pocet uzivatelu:')
 label_count_text.grid(row = 6, column = 0)
 
-label_count_number = Label(root, text = 'DOPLNIT')
+label_count_number = Label(root, text = count_all_data())
 label_count_number.grid(row = 6, column = 1)
 
 root.mainloop()
