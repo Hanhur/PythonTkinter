@@ -30,37 +30,32 @@ def check_dot(number):
     number_string = str(number)
     return number_string.replace(',', '.') if ',' in number_string else number_string
 
+# Database functions ================================================================
 def insert_data(bmi_name, bmi_text):
-    connection = psycopg2.connect(
+    query = '''INSERT INTO bmi(bmi_number, bmi_text) VALUES (%s, %s)'''
+    with psycopg2.connect(
         dbname = 'health',
         user = 'name',
         password = 'pass',
         host = '127.0.0.1',
         port = '5432'
-    )
-
-    cursor = connection.cursor()
-    query = '''INSERT INTO bmi(bmi_number, bmi_text) VALUES (%s, %s)'''
-    cursor.execute(query, (bmi_name, bmi_text))
-    connection.commit()
-    connection.close()
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(query, (bmi_name, bmi_text))
 
 def count_all_data():
-    connection = psycopg2.connect(
+    query = '''SELECT COUNT(bmi_id) FROM bmi'''
+    with psycopg2.connect(
         dbname = 'health',
         user = 'name',
         password = 'pass',
         host = '127.0.0.1',
         port = '5432'
-    )
-
-    cursor = connection.cursor()
-    query = '''SELECT COUNT(bmi_id) FROM bmi'''
-    cursor.execute(query)
-    count = cursor.fetchone()
-    connection.close()
-    return count[0]
-
+    ) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            return cursor.fetchone()[0]
+        
 # general label ================================================================
 label_general = Label(root, text = 'Vypocet BMi')
 label_general.grid(row = 0, column = 1)
