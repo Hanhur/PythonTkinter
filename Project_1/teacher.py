@@ -69,6 +69,13 @@ def display_all():
     all_data = cursor.fetchall()
     listbox = Listbox(root, width = 25, height = 5)
     listbox.grid(row = 9, column = 1)
+
+    # Scrollbar
+    scrollbar = Scrollbar(root)
+    scrollbar.grid(row = 9, column = 2, sticky = 'nsw')
+    listbox.config(yscrollcommand = scrollbar.set)
+    scrollbar.config(command = listbox.yview)
+
     for one_row in all_data:
         listbox.insert(0, one_row)
 
