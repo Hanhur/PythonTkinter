@@ -8,8 +8,15 @@ root.resizable(False, False)
 
 # Functions ===================================================================
 def calculate_bmi(weight, height):
-    text_result = ''
-    bmi = round(float(weight) / float(height) ** 2, 2)
+    try:
+        weight = float(weight)
+        height = float(height)
+    except ValueError:
+        label_user_result_1['text'] = 'chyba'
+        label_user_result_2['text'] = 'chyba'
+        return None
+
+    bmi = round(weight / height ** 2, 2)
     if bmi < 18.5:
         text_result = 'podvaha'
     elif bmi < 24.9:
