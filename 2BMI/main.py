@@ -26,6 +26,12 @@ def calculate_bmi(weight, height):
 
     insert_data(bmi, text_result)
 
+def check_dot(number):
+    number_string = str(number)
+    if ',' in number_string:
+        return number_string.replace(',', '.')
+    return number_string
+
 def insert_data(bmi_name, bmi_text):
     connection = psycopg2.connect(
         dbname = 'health',
@@ -76,7 +82,7 @@ entry_height = Entry(root)
 entry_height.grid(row = 2, column = 1)
 
 # Button =======================================================================
-button = Button(root, text = 'Vypocitat', command = lambda:calculate_bmi(entry_weight.get(), entry_height.get()))
+button = Button(root, text = 'Vypocitat', command = lambda:calculate_bmi(check_dot(entry_weight.get()), check_dot(entry_height.get())))
 button.grid(row = 3, column = 1)
 
 # result section ==============================================================
